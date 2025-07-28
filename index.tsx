@@ -1,70 +1,56 @@
-import { StyleSheet, Text, View } from "react-native";
+import "@fontsource-variable/inter";
+import "@fontsource-variable/jetbrains-mono";
+import "@fontsource-variable/recursive";
+import "@fontsource-variable/roboto-flex";
+import "@fontsource-variable/rubik";
+import React from "react";
+import "./globals.css";
 
-export default function App() {
-  return (
-    <View style={gaya.halaman}>
-      
-      {/* Segitiga  */}
-      <View style={gaya.segitigaDekoratif} />
+import "@fontsource/lato/400.css";
+import "@fontsource/lato/700.css";
+import "@fontsource/merriweather/400.css";
+import "@fontsource/merriweather/700.css";
+import "@fontsource/open-sans/400.css";
+import "@fontsource/open-sans/700.css";
+import "@fontsource/playfair-display/400.css";
+import "@fontsource/playfair-display/700.css";
+import "@fontsource/raleway/400.css";
+import "@fontsource/raleway/700.css";
 
-      {/* Persegi panjang isi nama */}
-      <View style={gaya.kotakNama}>
-        <Text style={gaya.teksNama}>Mutiara </Text>
-      </View>
+const allNames = [
+  "Aisyah", "Bagas", "Citra", "Damar", "Eka", "Farhan", "Gita", "Hani", "Indra", "Joko",
+  "Kirana", "Lutfi", "Mega", "Nina", "Omar", "Putri", "Qory", "Rafi", "Salsa", "Tari",
+  "Udin", "Vina", "Wulan", "Xena", "Yusuf", "Zara"
+];
 
-      {/* Kapsul radius 100 */}
-      <View style={gaya.kapsulID}>
-        <Text style={gaya.teksID}>105841114722</Text>
-      </View>
+const currentIndex = 6; // contoh urutan stambuk ke-7 (karena index 0-based)
 
-    </View>
-  );
+function getNamesAround(index: number) {
+  const before = [];
+  const after = [];
+  const total = allNames.length;
+
+  for (let i = 1; i <= 5; i++) {
+    before.push(allNames[(index - i + total) % total]);
+    after.push(allNames[(index + i) % total]);
+  }
+  return [...before.reverse(), allNames[index], ...after];
 }
 
-const gaya = StyleSheet.create({
-  halaman: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 25,
-    backgroundColor: '#f0f0f0'
-  },
+const fonts = [
+  "font-inter", "font-roboto", "font-recursive", "font-jetbrains", "font-rubik",
+  "font-merriweather", "font-lato", "font-opensans", "font-playfair", "font-raleway"
+];
 
-  segitigaDekoratif: {
-    width: 0,
-    height: 0,
-    borderLeftWidth: 35,
-    borderRightWidth: 35,
-    borderBottomWidth: 60,
-    borderLeftColor: 'transparent',
-    borderRightColor: 'transparent',
-    borderBottomColor: '#3498db',
-  },
+const Home = () => {
+  const names = getNamesAround(currentIndex);
+  return (
+    <main className="grid grid-cols-1 gap-4">
+      {names.map((name, idx) => (
+        <div key={idx} className={`${fonts[idx % fonts.length]} text-2xl`}>{name}</div>
+      ))}
+    </main>
+  );
+};
 
-  kotakNama: {
-    backgroundColor: '#2c3e50',
-    paddingHorizontal: 35,
-    paddingVertical: 15,
-    borderRadius: 12,
-  },
-
-  teksNama: {
-    color: '#ecf0f1',
-    fontSize: 22,
-    fontWeight: '600',
-    textAlign: 'center',
-  },
-
-  kapsulID: {
-    backgroundColor: '#16a085',
-    paddingHorizontal: 30,
-    paddingVertical: 10,
-    borderRadius: 100, 
-  },
-
-  teksID: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
-});
+export default Home;
